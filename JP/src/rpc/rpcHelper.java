@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class rpcHelper {
+public class RpcHelper {
 	// Writes a JSONArray to http response.
 	public static void writeJsonArray(HttpServletResponse response, JSONArray array) throws IOException{
 		response.setContentType("application/json");

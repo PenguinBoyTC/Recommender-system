@@ -2,6 +2,7 @@ package rpc;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import entity.Item;
+import external.TicketMasterAPI;
 
 /**
  * Servlet implementation class SearchItem
@@ -33,28 +37,42 @@ public class SearchItem extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		PrintWriter writer = response.getWriter();
-		writer.print("<html><body>");
-		writer.print("<h1>hello world</h1>");
-		if (request.getParameter("username") != null) {
-			String username = request.getParameter("username");
-			writer.print("<p>" + username + "</p>");
-		} else {
-			JSONArray array = new JSONArray();
-			JSONObject obj = new JSONObject();
-			try {
-				obj.put("key1", "value1");
-				array.put(obj);
-				array.put(new JSONObject().put("key2", "value2"));
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			writer.print(array);
+//		PrintWriter writer = response.getWriter();
+//		writer.print("<html><body>");
+//		writer.print("<h1>hello world</h1>");
+//		if (request.getParameter("username") != null) {
+//			String username = request.getParameter("username");
+//			writer.print("<p>" + username + "</p>");
+//		} else {
+//			JSONArray array = new JSONArray();
+//			JSONObject obj = new JSONObject();
+//			try {
+//				obj.put("key1", "value1");
+//				array.put(obj);
+//				array.put(new JSONObject().put("key2", "value2"));
+//			} catch (JSONException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			writer.print(array);
+//		}
+//		writer.print("</body></html>");
+//		writer.close();
+		
+		//29.682684, -95.295410
+		double lat = Double.parseDouble(request.getParameter("lat"));
+		double lon = Double.parseDouble(request.getParameter("lon"));
+		String keyword = request.getParameter("keyword");
+		
+		TicketMasterAPI tmAPI = new TicketMasterAPI();
+		List<Item> items = tmAPI.search(lat, lon, keyword);
+		
+		JSONArray array = new JSONArray();
+		for (Item item : items) {
+			array.put(item.toJSONObject());
 		}
-//		writer.append("Served at: ").append(request.getContextPath());
-		writer.print("</body></html>");
-		writer.close();
+		RpcHelper.writeJsonArray(response, array);
+		
 	}
 
 	/**
