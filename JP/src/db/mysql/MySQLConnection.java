@@ -47,10 +47,9 @@ public class MySQLConnection implements DBConnection {
 	  		   System.err.println("DB connection failed");
 	  		   return;
 	  	}
-		String sql = "INSERT IGNORE INTO history VALUES(?, ?)";
+		String sql = "INSERT IGNORE INTO history(user_id, item_id) VALUES (?, ?)";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps = conn.prepareStatement(sql);
 			ps.setString(1, userId);
 			for (String itemId : itemIds) {
 				ps.setString(2, itemId);
