@@ -22,7 +22,7 @@ import entity.Item;
 /**
  * Servlet implementation class ItemHistory
  */
-@WebServlet("/History")
+@WebServlet("/history")
 public class ItemHistory extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
