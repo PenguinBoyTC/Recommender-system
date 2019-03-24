@@ -1,0 +1,44 @@
+import java.util.*;
+public class test {
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		int input = in.nextInt();
+		split(input);
+		in.close();
+	}
+	public static void per(String str) {
+		if (str == null || str.length() == 0) {
+			return;
+		}
+		StringBuilder sb = new StringBuilder();
+		dfs(str, 0, sb);
+	}
+	private static void dfs(String str, int level, StringBuilder sb) {
+		if (level == str.length() - 1) {
+			sb.append(str.charAt(level));
+			System.out.println(sb.toString());
+			sb.deleteCharAt(sb.length() - 1);
+			return;
+		}
+		sb.append(str.charAt(level));
+		sb.append(" ");
+		dfs(str, level + 1, sb);
+		sb.deleteCharAt(sb.length() - 1);
+		dfs(str, level + 1, sb);
+		sb.deleteCharAt(sb.length() - 1);
+	}
+	public static int split(int num) {
+		if (num == 0 || num == 1) {
+			return 1;
+		}
+		int[] M = new int[num + 1];
+		for (int i = 1; i <= num; i++) {
+			M[i] = i;
+			for (int j = 1; j * j <= i; j++) {
+				M[i] = Math.min(M[i], M[i - j * j] + 1);
+			}
+ 		}
+		return M[num];
+	}
+
+}
