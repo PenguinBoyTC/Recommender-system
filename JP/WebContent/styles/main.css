@@ -62,6 +62,25 @@ ul {
 	text-decoration: none;
 }
 
+#signin-btn {
+    color: #F9F9F9;
+	font-weight: 400;
+	margin-left: 20px;
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    text-decoration: none;
+}
+
+#signup-btn {
+    color: #F9F9F9;
+	font-weight: 400;
+	margin-left: 20px;
+    position: absolute;
+    right: 70px;
+    top: 15px;
+	text-decoration: none;
+}
 #welcome-msg {
 	border-right: 1px solid #FFFFFF;
 	padding-right: 10px;
@@ -137,6 +156,43 @@ ul {
 	color: #990000;
 	padding-top: 10px;
 }
+
+/**
+ * signup form
+ */
+#signup-form {
+	color: #624630;
+	margin: 0px auto;
+	overflow: auto;
+	padding: 40px;
+	width: 300px;
+}
+
+#signup-form label {
+	display: block;
+}
+
+#signup-form input {
+	border: none;
+	display: block;
+	margin-bottom: 10px;
+	padding: 8px;
+	width: 100%;
+}
+
+#signup-form button {
+	cursor: pointer;
+	float: right;
+	padding: 8px 20px;
+	text-align: right;
+}
+
+#signup-error {
+	clear: both;
+	color: #990000;
+	padding-top: 10px;
+}
+
 
 /**
  * main section
