@@ -14,6 +14,9 @@
   function init() {
     // register event listeners
     document.querySelector('#login-btn').addEventListener('click', login);
+    document.querySelector('#register-btn').addEventListener('click', register);
+    document.querySelector('#signup-btn').addEventListener('click', onSignUp);
+    document.querySelector('#signin-btn').addEventListener('click', onSignIn);
     document.querySelector('#nearby-btn').addEventListener('click', loadNearbyItems);
     document.querySelector('#fav-btn').addEventListener('click', loadFavoriteItems);
     document.querySelector('#recommend-btn').addEventListener('click', loadRecommendedItems);
@@ -44,18 +47,33 @@
         }
       });
   }
-
+  function onSignUp() {
+    var loginForm = document.querySelector('#login-form');
+    var signupForm = document.querySelector('#signup-form');
+    hideElement(loginForm);
+    showElement(signupForm);
+  }
+  function onSignIn() {
+    var loginForm = document.querySelector('#login-form');
+    var signupForm = document.querySelector('#signup-form');
+    hideElement(signupForm);
+    showElement(loginForm);
+  }
   function onSessionValid(result) {
     user_id = result.user_id;
     user_fullname = result.name;
 
     var loginForm = document.querySelector('#login-form');
+    var signupForm = document.querySelector('#signup-form');
+    var signInButton = document.querySelector('#signin-btn');
+    var signUpButton = document.querySelector('#signup-btn');
+    
     var itemNav = document.querySelector('#item-nav');
     var itemList = document.querySelector('#item-list');
     var avatar = document.querySelector('#avatar');
     var welcomeMsg = document.querySelector('#welcome-msg');
     var logoutBtn = document.querySelector('#logout-link');
-
+   
     welcomeMsg.innerHTML = 'Welcome, ' + user_fullname;
 
     showElement(itemNav);
@@ -64,25 +82,35 @@
     showElement(welcomeMsg);
     showElement(logoutBtn, 'inline-block');
     hideElement(loginForm);
-
+    hideElement(signupForm);
+    hideElement(signInButton);
+    hideElement(signUpButton);
     initGeoLocation();
   }
 
   function onSessionInvalid() {
-    var loginForm = document.querySelector('#login-form');
+    //var loginForm = document.querySelector('#login-form');
+    //var signupForm = document.querySelector('#signup-form');
+	var signInButton = document.querySelector('#signin-btn');
+	var signUpButton = document.querySelector('#signup-btn');
+	  
     var itemNav = document.querySelector('#item-nav');
     var itemList = document.querySelector('#item-list');
     var avatar = document.querySelector('#avatar');
     var welcomeMsg = document.querySelector('#welcome-msg');
     var logoutBtn = document.querySelector('#logout-link');
-
+    
+    //hideElement(signupForm);
     hideElement(itemNav);
     hideElement(itemList);
     hideElement(avatar);
     hideElement(logoutBtn);
     hideElement(welcomeMsg);
-
-    showElement(loginForm);
+    //showElement(loginForm);
+    
+    showElement(signInButton);
+    showElement(signUpButton)
+    onSignIn();
   }
 
   function hideElement(element) {
@@ -136,7 +164,63 @@
       loadNearbyItems();
     });
   }
+  
+  // -----------------------------------
+  // Register
+  // -----------------------------------
+  
+  function register() {
+	var new_username = document.querySelector('#new-username').value;
+	var lastname = document.querySelector('#lastname').value;
+	var firstname = document.querySelector('#firstname').value;
+	var new_password = document.querySelector('#new-password').value;
+	var confirm = document.querySelector('#confirm').value;
+	console.log(new_username);
+	console.log(new_password);
+	if (new_username == "" || lastname == "" || firstname == "") {
+		alert("Invalid name");
+		return;
+	}
+	if (new_password.length < 8) {
+		alert("The passwords are not at least 8 characters long ");
+		return;
+	}
+	if (new_password != confirm) {
+		alert("The passwords entered don't match ");
+		return;
+	}
+	
+	confirm = md5(new_username + md5(confirm));
+	var url = './register';
+	
+	//test below
+	var req = JSON.stringify({
+      user_id : new_username,
+      password : confirm,
+      first_name : firstname,
+      last_name : lastname,
+    });
+	ajax('POST', url, req,
+      // successful callback
+      function(res) {
+        var result = JSON.parse(res);
 
+        // successfully logged in
+        if (result.status === 'OK') {
+        	alert("Register Successfully");
+        	onSignIn()
+        	console.log("Register successfully!");
+        	
+        }
+      },
+
+      // error
+      function() {
+        showLoginError();
+      },
+      true);
+  }
+  
   // -----------------------------------
   // Login
   // -----------------------------------
