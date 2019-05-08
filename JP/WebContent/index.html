@@ -15,6 +15,8 @@
       <a href="#">Home</a>
       <a href="#">Contact</a>
       <a href="#">About</a>
+      <a href="#" id="signin-btn">Sign in</a>
+      <a href="#" id="signup-btn">Sign up</a>
     </nav>
     <span id="welcome-msg"></span>
     <a id="logout-link" href="logout">Logout</a>
@@ -38,7 +40,20 @@
         <button id="login-btn">Login</button>
         <p id="login-error"></p>
       </div>
-
+      <div id="signup-form">
+        <label for="new-username">Username:</label>
+        <input id="new-username" name="new-username" type="text">
+        <label for="lastname">Last Name:</label>
+        <input id="lastname" name="lastname" type="text">
+        <label for="firstname">First Name:</label>
+        <input id="firstname" name="firstname" type="text">
+        <label for="new-password">Password:</label>
+        <input id="new-password" name="new-password" type="password">
+        <label for="confirm">Confirm:</label>
+        <input id="confirm" name="confirm" type="password">
+        <button id="register-btn">Sign up</button>
+        <p id="signup-error"></p>
+      </div>
       <aside id="item-nav">
         <div class="nav-icon">
           <i class="fa fa-sitemap fa-2x"></i>
